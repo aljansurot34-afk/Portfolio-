@@ -762,6 +762,683 @@
         /* =========================
            SERVICES
            ========================= */
-        <section id="services"> <div class="container"> <div class="section-heading reveal"> <div class="section-label">07 — Services</div> <h2>How I can help.</h2> <p> Services I can offer for personal, student, school, and small-business web projects. </p> </div> <div class="services-grid"> <div class="service-card reveal"> <div class="service-icon">🌐</div> <h3>Website Development</h3> <p> Development of functional websites using modern HTML, CSS, and JavaScript. </p> </div> <div class="service-card reveal"> <div class="service-icon">🎨</div> <h3>Website Design</h3> <p> Clean and professional website layouts designed around the project's goals. </p> </div> <div class="service-card reveal"> <div class="service-icon">🚀</div> <h3>Landing Page Creation</h3> <p> Attractive landing pages for projects, portfolios, campaigns, and organizations. </p> </div> <div class="service-card reveal"> <div class="service-icon">📱</div> <h3>Responsive Web Design</h3> <p> Mobile-friendly interfaces that work across phones, tablets, and desktop screens. </p> </div> <div class="service-card reveal"> <div class="service-icon">⚡</div> <h3>Basic JavaScript Development</h3> <p> Interactive components, forms, menus, modals, animations, and browser functionality. </p> </div> <div class="service-card reveal"> <div class="service-icon">🏫</div> <h3>Student / School Portals</h3> <p> Front-end portal concepts for student and school services, information, and digital workflows. </p> </div> <div class="service-card reveal"> <div class="service-icon">✦</div> <h3>UI/UX Design</h3> <p> Simple and user-focused interface concepts for websites and digital applications. </p> </div> </div> </div> </section> <!-- ===================================================== CONTACT IMPORTANT: This is a front-end-only contact form. It opens the visitor's email application using mailto. ===================================================== --> <section id="contact"> <div class="container"> <div class="section-heading reveal"> <div class="section-label">08 — Contact</div> <h2>Let's build something.</h2> <p> Have a project, opportunity, or idea? Send me a message. </p> </div> <div class="contact-box reveal"> <div class="contact-intro"> <h3>Let's connect.</h3> <p> I'm open to discussing student projects, website development, collaborations, and future opportunities. </p> <div class="contact-details"> <!-- EDIT CONTACT INFORMATION HERE --> <a class="contact-detail" href="mailto:aljansurot375@gmail.com"> <span>✉</span> <span>aljansurot375@gmail.com</span> </a> <div class="contact-detail"> <span>📍</span> <span>Brgy. Pook</span> </div> <a class="contact-detail" href="#"> <span>in</span> <span>LinkedIn Profile</span> </a> <a class="contact-detail" href="#"> <span>GH</span> <span>GitHub Profile</span> </a> </div> </div> <form class="contact-form" id="contactForm"> <div class="form-row"> <div class="field"> <label for="name">Your Name</label> <input type="text" id="name" placeholder="Enter your name" required> </div> <div class="field"> <label for="email">Your Email</label> <input type="email" id="email" placeholder="you@example.com" required> </div> </div> <div class="field"> <label for="subject">Subject</label> <input type="text" id="subject" placeholder="Project / Opportunity" required> </div> <div class="field"> <label for="message">Message</label> <textarea id="message" placeholder="Tell me about your project..." required></textarea> </div> <button type="submit" class="btn btn-primary"> Send Message → </button> </form> </div> </div> </section> </main> <!-- ========================================================= FOOTER ========================================================= --> <footer> <div class="container footer-content"> <p> © <span id="year"></span> Aljan Surot. All rights reserved. </p> <p> BSIT Student • Aspiring Web Developer </p> <a href="#home" class="back-top" aria-label="Back to top"> ↑ </a> </div> </footer> <!-- Toast notification --> <div class="toast" id="toast"></div> <script> /* ========================================================= ALJAN SUROT PORTFOLIO JAVASCRIPT Everything is contained in this index.html file. ========================================================= */ /* ========================================================= MOBILE MENU ========================================================= */ const menuBtn = document.getElementById("menuBtn"); const navLinks = document.getElementById("navLinks"); menuBtn.addEventListener("click", function () { navLinks.classList.toggle("open"); if (navLinks.classList.contains("open")) { menuBtn.textContent = "✕"; } else { menuBtn.textContent = "☰"; } }); /* Close mobile menu after clicking a navigation link */ document.querySelectorAll(".nav-links a").forEach(function (link) { link.addEventListener("click", function () { navLinks.classList.remove("open"); menuBtn.textContent = "☰"; }); }); /* ========================================================= HEADER SCROLL EFFECT ========================================================= */ const header = document.getElementById("header"); window.addEventListener("scroll", function () { if (window.scrollY > 30) { header.classList.add("scrolled"); } else { header.classList.remove("scrolled"); } }); /* ========================================================= ACTIVE NAVIGATION ========================================================= */ const sections = document.querySelectorAll("section"); const navigationLinks = document.querySelectorAll(".nav-links a"); window.addEventListener("scroll", function () { let currentSection = ""; sections.forEach(function (section) { const sectionTop = section.offsetTop - 150; const sectionHeight = section.offsetHeight; if ( window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight ) { currentSection = section.getAttribute("id"); } }); navigationLinks.forEach(function (link) { link.classList.remove("active"); if (link.getAttribute("href") === "#" + currentSection) { link.classList.add("active"); } }); }); /* ========================================================= SCROLL REVEAL ANIMATION ========================================================= */ const revealElements = document.querySelectorAll(".reveal"); const revealObserver = new IntersectionObserver( function (entries, observer) { entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add("visible"); observer.unobserve(entry.target); } }); }, { threshold: 0.12 } ); revealElements.forEach(function (element) { revealObserver.observe(element); }); /* ========================================================= TOAST FUNCTION ========================================================= */ const toast = document.getElementById("toast"); function showToast(message) { toast.textContent = message; toast.classList.add("show"); setTimeout(function () { toast.classList.remove("show"); }, 3000); } /* ========================================================= CONTACT FORM Since this website contains only HTML/CSS/JavaScript and no backend, the form creates a mailto link. Change the email below if you update your email address. ========================================================= */ const contactForm = document.getElementById("contactForm"); contactForm.addEventListener("submit", function (event) { event.preventDefault(); const name = document.getElementById("name").value.trim(); const email = document.getElementById("email").value.trim(); const subject = document.getElementById("subject").value.trim(); const message = document.getElementById("message").value.trim(); if (!name || !email || !subject || !message) { showToast("Please complete all fields."); return; } const recipient = "aljansurot375@gmail.com"; const emailSubject = encodeURIComponent(subject); const emailBody = encodeURIComponent( "Name: " + name + "\n" + "Email: " + email + "\n\n" + message ); const mailtoLink = "mailto:" + recipient + "?subject=" + emailSubject + "&body=" + emailBody; window.location.href = mailtoLink; showToast("Opening your email application..."); contactForm.reset(); }); /* ========================================================= CURRENT YEAR ========================================================= */ document.getElementById("year").textContent = new Date().getFullYear(); /* ========================================================= SMOOTH BUTTON FEEDBACK ========================================================= */ document.querySelectorAll(".btn").forEach(function (button) { button.addEventListener("click", function () { if ( button.getAttribute("href") && button.getAttribute("href").startsWith("#") ) { return; } }); }); /* ========================================================= KEYBOARD ACCESSIBILITY ========================================================= */ document.addEventListener("keydown", function (event) { if (event.key === "Escape") { navLinks.classList.remove("open"); menuBtn.textContent = "☰"; } }); </script> </body> </html>
+        ```html
+<section id="services">
+    <div class="container">
 
-        .
+        <div class="section-heading reveal">
+            <div class="section-label">07 — Services</div>
+
+            <h2>How I can help.</h2>
+
+            <p>
+                Services I can offer for personal, student, school,
+                and small-business web projects.
+            </p>
+        </div>
+
+        <div class="services-grid">
+
+            <!-- Website Development -->
+            <div class="service-card reveal">
+                <div class="service-icon">🌐</div>
+
+                <h3>Website Development</h3>
+
+                <p>
+                    Development of functional websites using modern
+                    HTML, CSS, and JavaScript.
+                </p>
+            </div>
+
+            <!-- Website Design -->
+            <div class="service-card reveal">
+                <div class="service-icon">🎨</div>
+
+                <h3>Website Design</h3>
+
+                <p>
+                    Clean and professional website layouts designed
+                    around the project's goals.
+                </p>
+            </div>
+
+            <!-- Landing Page -->
+            <div class="service-card reveal">
+                <div class="service-icon">🚀</div>
+
+                <h3>Landing Page Creation</h3>
+
+                <p>
+                    Attractive landing pages for projects, portfolios,
+                    campaigns, and organizations.
+                </p>
+            </div>
+
+            <!-- Responsive Design -->
+            <div class="service-card reveal">
+                <div class="service-icon">📱</div>
+
+                <h3>Responsive Web Design</h3>
+
+                <p>
+                    Mobile-friendly interfaces that work across phones,
+                    tablets, and desktop screens.
+                </p>
+            </div>
+
+            <!-- JavaScript -->
+            <div class="service-card reveal">
+                <div class="service-icon">⚡</div>
+
+                <h3>Basic JavaScript Development</h3>
+
+                <p>
+                    Interactive components, forms, menus, modals,
+                    animations, and browser functionality.
+                </p>
+            </div>
+
+            <!-- School Portals -->
+            <div class="service-card reveal">
+                <div class="service-icon">🏫</div>
+
+                <h3>Student / School Portals</h3>
+
+                <p>
+                    Front-end portal concepts for student and school
+                    services, information, and digital workflows.
+                </p>
+            </div>
+
+            <!-- UI/UX -->
+            <div class="service-card reveal">
+                <div class="service-icon">✦</div>
+
+                <h3>UI/UX Design</h3>
+
+                <p>
+                    Simple and user-focused interface concepts for
+                    websites and digital applications.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================================================
+     CONTACT SECTION
+     Front-end-only contact form using mailto
+========================================================= -->
+
+<section id="contact">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <div class="section-label">08 — Contact</div>
+
+            <h2>Let's build something.</h2>
+
+            <p>
+                Have a project, opportunity, or idea?
+                Send me a message.
+            </p>
+        </div>
+
+
+        <div class="contact-box reveal">
+
+            <!-- Contact Introduction -->
+            <div class="contact-intro">
+
+                <h3>Let's connect.</h3>
+
+                <p>
+                    I'm open to discussing student projects,
+                    website development, collaborations,
+                    and future opportunities.
+                </p>
+
+
+                <!-- Contact Details -->
+                <div class="contact-details">
+
+                    <!-- Email -->
+                    <a
+                        class="contact-detail"
+                        href="mailto:aljansurot375@gmail.com"
+                    >
+                        <span>✉</span>
+                        <span>aljansurot375@gmail.com</span>
+                    </a>
+
+
+                    <!-- Location -->
+                    <div class="contact-detail">
+                        <span>📍</span>
+                        <span>Brgy. Pook</span>
+                    </div>
+
+
+                    <!-- LinkedIn -->
+                    <a
+                        class="contact-detail"
+                        href="#"
+                    >
+                        <span>in</span>
+                        <span>LinkedIn Profile</span>
+                    </a>
+
+
+                    <!-- GitHub -->
+                    <a
+                        class="contact-detail"
+                        href="#"
+                    >
+                        <span>GH</span>
+                        <span>GitHub Profile</span>
+                    </a>
+
+                </div>
+            </div>
+
+
+            <!-- Contact Form -->
+            <form
+                class="contact-form"
+                id="contactForm"
+            >
+
+                <div class="form-row">
+
+                    <!-- Name -->
+                    <div class="field">
+
+                        <label for="name">
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="field">
+
+                        <label for="email">
+                            Your Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="you@example.com"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Subject -->
+                <div class="field">
+
+                    <label for="subject">
+                        Subject
+                    </label>
+
+                    <input
+                        type="text"
+                        id="subject"
+                        placeholder="Project / Opportunity"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Message -->
+                <div class="field">
+
+                    <label for="message">
+                        Message
+                    </label>
+
+                    <textarea
+                        id="message"
+                        placeholder="Tell me about your project..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- Submit -->
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Send Message →
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="container footer-content">
+
+        <p>
+            © <span id="year"></span>
+            Aljan Surot. All rights reserved.
+        </p>
+
+        <p>
+            BSIT Student • Aspiring Web Developer
+        </p>
+
+        <a
+            href="#home"
+            class="back-top"
+            aria-label="Back to top"
+        >
+            ↑
+        </a>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     TOAST NOTIFICATION
+========================================================= -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+
+
+menuBtn.addEventListener("click", function () {
+
+    navLinks.classList.toggle("open");
+
+    if (navLinks.classList.contains("open")) {
+
+        menuBtn.textContent = "✕";
+
+    } else {
+
+        menuBtn.textContent = "☰";
+
+    }
+
+});
+
+
+/* Close mobile menu after clicking navigation link */
+
+document
+    .querySelectorAll(".nav-links a")
+    .forEach(function (link) {
+
+        link.addEventListener("click", function () {
+
+            navLinks.classList.remove("open");
+
+            menuBtn.textContent = "☰";
+
+        });
+
+    });
+
+
+/* =========================================================
+   HEADER SCROLL EFFECT
+========================================================= */
+
+const header = document.getElementById("header");
+
+
+window.addEventListener("scroll", function () {
+
+    if (window.scrollY > 30) {
+
+        header.classList.add("scrolled");
+
+    } else {
+
+        header.classList.remove("scrolled");
+
+    }
+
+});
+
+
+/* =========================================================
+   ACTIVE NAVIGATION
+========================================================= */
+
+const sections = document.querySelectorAll("section");
+const navigationLinks =
+    document.querySelectorAll(".nav-links a");
+
+
+window.addEventListener("scroll", function () {
+
+    let currentSection = "";
+
+
+    sections.forEach(function (section) {
+
+        const sectionTop =
+            section.offsetTop - 150;
+
+        const sectionHeight =
+            section.offsetHeight;
+
+
+        if (
+            window.scrollY >= sectionTop &&
+            window.scrollY < sectionTop + sectionHeight
+        ) {
+
+            currentSection =
+                section.getAttribute("id");
+
+        }
+
+    });
+
+
+    navigationLinks.forEach(function (link) {
+
+        link.classList.remove("active");
+
+
+        if (
+            link.getAttribute("href") ===
+            "#" + currentSection
+        ) {
+
+            link.classList.add("active");
+
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   SCROLL REVEAL ANIMATION
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+
+const revealObserver =
+    new IntersectionObserver(
+
+        function (entries, observer) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("visible");
+
+                    observer.unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+
+        {
+            threshold: 0.12
+        }
+
+    );
+
+
+revealElements.forEach(function (element) {
+
+    revealObserver.observe(element);
+
+});
+
+
+/* =========================================================
+   TOAST FUNCTION
+========================================================= */
+
+const toast =
+    document.getElementById("toast");
+
+
+function showToast(message) {
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+
+    setTimeout(function () {
+
+        toast.classList.remove("show");
+
+    }, 3000);
+
+}
+
+
+/* =========================================================
+   CONTACT FORM
+   Opens visitor's email application using mailto.
+========================================================= */
+
+const contactForm =
+    document.getElementById("contactForm");
+
+
+contactForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById("name")
+                .value
+                .trim();
+
+
+        const email =
+            document.getElementById("email")
+                .value
+                .trim();
+
+
+        const subject =
+            document.getElementById("subject")
+                .value
+                .trim();
+
+
+        const message =
+            document.getElementById("message")
+                .value
+                .trim();
+
+
+        /* Validate fields */
+
+        if (
+            !name ||
+            !email ||
+            !subject ||
+            !message
+        ) {
+
+            showToast(
+                "Please complete all fields."
+            );
+
+            return;
+
+        }
+
+
+        /* Recipient email */
+
+        const recipient =
+            "aljansurot375@gmail.com";
+
+
+        /* Encode email information */
+
+        const emailSubject =
+            encodeURIComponent(subject);
+
+
+        const emailBody =
+            encodeURIComponent(
+
+                "Name: " + name +
+                "\n" +
+                "Email: " + email +
+                "\n\n" +
+                message
+
+            );
+
+
+        /* Create mailto link */
+
+        const mailtoLink =
+            "mailto:" +
+            recipient +
+            "?subject=" +
+            emailSubject +
+            "&body=" +
+            emailBody;
+
+
+        /* Open email application */
+
+        window.location.href =
+            mailtoLink;
+
+
+        showToast(
+            "Opening your email application..."
+        );
+
+
+        /* Reset form */
+
+        contactForm.reset();
+
+    }
+);
+
+
+/* =========================================================
+   CURRENT YEAR
+========================================================= */
+
+document.getElementById("year")
+    .textContent =
+    new Date().getFullYear();
+
+
+/* =========================================================
+   BUTTON FEEDBACK
+========================================================= */
+
+document
+    .querySelectorAll(".btn")
+    .forEach(function (button) {
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    button.getAttribute("href") &&
+                    button
+                        .getAttribute("href")
+                        .startsWith("#")
+                ) {
+
+                    return;
+
+                }
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   KEYBOARD ACCESSIBILITY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "Escape") {
+
+            navLinks.classList.remove("open");
+
+            menuBtn.textContent = "☰";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
+        
